@@ -27,13 +27,14 @@ test('Email validation and form submission', async ({ page }) => {
   }
 
   // Open the login or registration page
-  await page.goto('https://drumbun.md/register');
+  // await page.goto('https://drumbun.md/register');
+  await page.goto('http://127.0.0.1:8000/register');
 
   const pass = Math.random(11111111, 9999999999).toString();
 
   // Fill out the form with the valid email and full name
-  await page.fill('input[name="surname"]', user.firstName);
-  await page.fill('input[name="first_name"]', user.lastName);
+  await page.fill('input[name="name"]', user.firstName + ' ' + user.lastName);
+  // await page.fill('input[name="first_name"]', user.lastName);
   await page.fill('input[name="email"]', user.email);
   await page.fill('input[name="password"]', pass);
   await page.fill('input[name="password_confirmation"]', pass);
@@ -41,17 +42,17 @@ test('Email validation and form submission', async ({ page }) => {
   // Set the relative file path
 
 
-  const fileChooserPromise = page.waitForEvent('filechooser');
-  await page.locator('input[type="file"]').click();
-  const fileChooser = await fileChooserPromise;
-  await fileChooser.setFiles('./assets/image.png');
+  // const fileChooserPromise = page.waitForEvent('filechooser');
+  // await page.locator('input[type="file"]').click();
+  // const fileChooser = await fileChooserPromise;
+  // await fileChooser.setFiles('./assets/image.png');
 
 
   // Simulate form submission
   await page.click('button[type="submit"]');
 
   // Check if the form was submitted successfully
-  await expect(page.locator('.auth-page-hero-title')).toBeVisible();
+  await expect(page.locator('.guide-page__welcome-tst')).toBeVisible();
 
 });
 
